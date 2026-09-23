@@ -16,12 +16,12 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new PlaylistFragment(); // Left Page: Queue
+                return new PlaylistFragment(); // Page 0: Home / Library / Queue
             case 2:
-                return new LyricsFragment();   // Right Page: Live Lyrics
+                return new SettingsFragment(); // Page 2: Settings (Theme, LAN, Equalizer, About)
             case 1:
             default:
-                return new PlayerFragment();   // Center Page: Main Controls
+                return new PlayerFragment();   // Page 1: Player (Now Playing)
         }
     }
 
@@ -30,4 +30,3 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         return 3;
     }
 }
-

@@ -11,12 +11,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.mp3player.model.Song;
 import com.example.mp3player.repository.MusicRepository;
@@ -27,9 +26,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 200;
-    private final String[] themeOptions = {"Light Mode", "Dark Mode", "Device Default"};
 
     private ViewPager2 viewPager;
+    private BottomNavigationView bottomNavigation;
     private MusicPlaybackService playbackService;
     private boolean isBound = false;
 
@@ -55,17 +54,56 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = findViewById(R.id.viewPager);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
-        // Start on Page 1 (The Middle Player Screen)
+        // Start on Page 1 (The Center Player Screen, matching Image 2)
         viewPager.setCurrentItem(1, false);
+        if (bottomNavigation != null) {
+            bottomNavigation.setSelectedItemId(R.id.nav_player);
+        }
+
+        setupBottomNavigation();
 
         // Start and bind the music service
         Intent serviceIntent = new Intent(this, MusicPlaybackService.class);
         startService(serviceIntent);
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void setupBottomNavigation() {
+        if (bottomNavigation == null || viewPager == null) return;
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                viewPager.setCurrentItem(0, true);
+                return true;
+            } else if (itemId == R.id.nav_player) {
+                viewPager.setCurrentItem(1, true);
+                return true;
+            } else if (itemId == R.id.nav_settings) {
+                viewPager.setCurrentItem(2, true);
+                return true;
+            }
+            return false;
+        });
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                int navId = R.id.nav_player;
+                if (position == 0) navId = R.id.nav_home;
+                else if (position == 2) navId = R.id.nav_settings;
+
+                if (bottomNavigation.getSelectedItemId() != navId) {
+                    bottomNavigation.setSelectedItemId(navId);
+                }
+            }
+        });
     }
 
     @Override
@@ -99,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void switchToLyricsPage() {
+    public void switchToSettingsPage() {
         if (viewPager != null) {
             viewPager.setCurrentItem(2, true);
         }
@@ -134,31 +172,5 @@ public class MainActivity extends AppCompatActivity {
             playbackService.getQueueManager().setQueue(songs, 1); // Start on Song 2 (Neon Horizon) matching Image 2!
             Toast.makeText(this, "Loaded " + songs.size() + " songs", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void showThemeDialog() {
-        int currentSetting = 2; // Default to System
-        int mode = AppCompatDelegate.getDefaultNightMode();
-        if (mode == AppCompatDelegate.MODE_NIGHT_NO) currentSetting = 0;
-        else if (mode == AppCompatDelegate.MODE_NIGHT_YES) currentSetting = 1;
-
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.theme_settings)
-                .setSingleChoiceItems(themeOptions, currentSetting, (dialog, which) -> {
-                    switch (which) {
-                        case 0:
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            break;
-                        case 1:
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            break;
-                        case 2:
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                            break;
-                    }
-                    dialog.dismiss();
-                })
-                .setNegativeButton(R.string.close, null)
-                .show();
     }
 }

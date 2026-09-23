@@ -150,3 +150,4 @@ public class AlbumArtHelper {
         return generateStylizedArt(new Song(0, seed, "Artist", "Album", 0, null, null));
     }
 }
+

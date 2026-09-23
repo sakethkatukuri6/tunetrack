@@ -5,7 +5,8 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:padding="14dp"
-    android:background="?attr/selectableItemBackground">
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_album_card">
 
     <TextView
         android:id="@+id/tvTrackNumber"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textSize="14sp"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="#80FFFFFF"
         android:gravity="center" />
 
     <LinearLayout
@@ -30,6 +31,7 @@
             android:text="Track Title"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textColor="#FFFFFF"
             android:maxLines="1"
             android:ellipsize="end" />
 
@@ -40,7 +42,7 @@
             android:layout_marginTop="2dp"
             android:text="Artist Name"
             android:textSize="13sp"
-            android:textColor="?android:attr/textColorSecondary"
+            android:textColor="#B3FFFFFF"
             android:maxLines="1"
             android:ellipsize="end" />
     </LinearLayout>
@@ -51,15 +53,15 @@
         android:layout_height="wrap_content"
         android:text="3:45"
         android:textSize="12sp"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="#80FFFFFF"
         android:layout_marginEnd="12dp" />
 
     <ImageView
         android:id="@+id/ivItemMore"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@android:drawable/ic_menu_more"
-        android:contentDescription="More" />
+        android:src="@drawable/ic_nav_player"
+        android:alpha="0.6"
+        android:contentDescription="Play Track" />
 
 </LinearLayout>
-

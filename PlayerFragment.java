@@ -134,7 +134,9 @@ public class PlayerFragment extends Fragment implements MusicPlaybackService.Pla
         btnLanShare.setOnClickListener(v -> showQrModal());
 
         btnEqualizer.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Equalizer: Balanced Studio Preset", Toast.LENGTH_SHORT).show();
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).switchToSettingsPage();
+            }
         });
 
         btnCollapse.setOnClickListener(v -> {
