@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textSize="14sp"
-        android:textColor="#80FFFFFF"
+        android:textColor="@color/text_secondary"
         android:gravity="center" />
 
     <LinearLayout
@@ -31,7 +32,7 @@
             android:text="Track Title"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:maxLines="1"
             android:ellipsize="end" />
 
@@ -42,7 +43,7 @@
             android:layout_marginTop="2dp"
             android:text="Artist Name"
             android:textSize="13sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="@color/text_secondary"
             android:maxLines="1"
             android:ellipsize="end" />
     </LinearLayout>
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="3:45"
         android:textSize="12sp"
-        android:textColor="#80FFFFFF"
+        android:textColor="@color/text_secondary"
         android:layout_marginEnd="12dp" />
 
     <ImageView
@@ -61,7 +62,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_nav_player"
-        android:alpha="0.6"
-        android:contentDescription="Play Track" />
+        app:tint="@color/text_secondary"
+        android:contentDescription="Song Options" />
 
 </LinearLayout>

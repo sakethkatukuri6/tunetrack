@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#12101E"
+    android:background="@color/app_bg"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
     android:paddingTop="16dp">
@@ -28,14 +28,14 @@
                 android:text="Music Library"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your playlists and songs"
                 android:textSize="12sp"
-                android:textColor="#80FFFFFF" />
+                android:textColor="@color/text_secondary" />
         </LinearLayout>
 
         <!-- + New Playlist Button -->
@@ -47,8 +47,8 @@
             android:layout_centerVertical="true"
             android:text="+ Playlist"
             android:textSize="12sp"
-            android:backgroundTint="#BB86FC"
-            android:textColor="#000000"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/on_primary"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
     </RelativeLayout>
@@ -88,7 +88,7 @@
             android:layout_gravity="center"
             android:text="No tracks in this playlist.\nTap the 3 dots on any song to add it!"
             android:textSize="14sp"
-            android:textColor="#80FFFFFF"
+            android:textColor="@color/text_secondary"
             android:gravity="center"
             android:visibility="gone" />
     </FrameLayout>

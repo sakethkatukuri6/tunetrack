@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.example.mp3player.lan.LanSyncManager;
+import com.example.mp3player.util.ThemeManager;
 
 public class SettingsFragment extends Fragment {
 
@@ -29,6 +30,8 @@ public class SettingsFragment extends Fragment {
     private Button btnEqBass;
     private Button btnEqRock;
     private Button btnEqFlat;
+
+    private boolean isInitializingTheme = true;
 
     @Nullable
     @Override
@@ -54,23 +57,39 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setupThemeGroup() {
-        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_NO) {
+        if (getContext() == null) return;
+
+        isInitializingTheme = true;
+        int savedMode = ThemeManager.getSavedNightMode(getContext());
+
+        if (savedMode == AppCompatDelegate.MODE_NIGHT_NO) {
             rbLight.setChecked(true);
-        } else if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+        } else if (savedMode == AppCompatDelegate.MODE_NIGHT_YES) {
             rbDark.setChecked(true);
         } else {
             rbSystem.setChecked(true);
         }
+        isInitializingTheme = false;
 
         rgTheme.setOnCheckedChangeListener((group, checkedId) -> {
+            if (isInitializingTheme || getContext() == null) return;
+
+            int targetMode;
+            String modeName;
+
             if (checkedId == R.id.rbLight) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                targetMode = AppCompatDelegate.MODE_NIGHT_NO;
+                modeName = "Light Mode";
             } else if (checkedId == R.id.rbDark) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else if (checkedId == R.id.rbSystem) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                targetMode = AppCompatDelegate.MODE_NIGHT_YES;
+                modeName = "Dark Mode";
+            } else {
+                targetMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+                modeName = "System Default";
             }
+
+            ThemeManager.setNightMode(requireContext(), targetMode);
+            Toast.makeText(getContext(), "Theme changed to: " + modeName, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -109,4 +128,3 @@ public class SettingsFragment extends Fragment {
         });
     }
 }
-

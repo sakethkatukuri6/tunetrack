@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#12101E"
+    android:background="@color/app_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:text="Settings"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="24dp" />
 
@@ -36,7 +36,7 @@
                 android:text="Appearance &amp; Theme"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:textColor="#BB86FC"
+                android:textColor="@color/primary"
                 android:layout_marginBottom="12dp" />
 
             <RadioGroup
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Light Mode"
-                    android:textColor="#E0E0E0"
+                    android:textColor="@color/text_primary"
                     android:padding="8dp" />
 
                 <RadioButton
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dark Mode"
-                    android:textColor="#E0E0E0"
+                    android:textColor="@color/text_primary"
                     android:padding="8dp" />
 
                 <RadioButton
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Follow System Default"
-                    android:textColor="#E0E0E0"
+                    android:textColor="@color/text_primary"
                     android:padding="8dp" />
             </RadioGroup>
         </LinearLayout>
@@ -85,7 +85,7 @@
                 android:text="LAN Audio Cast Server"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:textColor="#03DAC6"
+                android:textColor="@color/secondary_variant"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="Server URL: http://192.168.1.45:8080"
                 android:textSize="14sp"
-                android:textColor="#B3FFFFFF"
+                android:textColor="@color/text_secondary"
                 android:layout_marginBottom="14dp" />
 
             <Button
@@ -102,8 +102,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View LAN Cast QR &amp; Sync Info"
-                android:backgroundTint="#03DAC6"
-                android:textColor="#000000" />
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/on_secondary" />
         </LinearLayout>
 
         <!-- 3. Audio & Equalizer Card -->
@@ -121,7 +121,7 @@
                 android:text="Equalizer &amp; Sound Profile"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:textColor="#BB86FC"
+                android:textColor="@color/primary"
                 android:layout_marginBottom="10dp" />
 
             <TextView
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="Active Preset: Balanced Studio"
                 android:textSize="14sp"
-                android:textColor="#B3FFFFFF"
+                android:textColor="@color/text_secondary"
                 android:layout_marginBottom="12dp" />
 
             <LinearLayout
@@ -181,17 +181,16 @@
                 android:text="About Music Player"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Version 1.0.0 (API 28+ Native Android)\nDynamic Cover Art Backgrounds &amp; LAN Audio Cast"
                 android:textSize="13sp"
-                android:textColor="#80FFFFFF"
+                android:textColor="@color/text_secondary"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
-

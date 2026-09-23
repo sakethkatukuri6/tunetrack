@@ -3,6 +3,7 @@ package com.example.mp3player;
 import android.app.AlertDialog;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -230,8 +231,9 @@ public class PlayerFragment extends Fragment implements MusicPlaybackService.Pla
             Bitmap art = AlbumArtHelper.getAlbumArt(getContext(), song);
             ivAlbumArt.setImageBitmap(art);
 
-            // 2. Extract Dynamic Palette Colors from Album Art
-            ColorExtractor.PaletteColors palette = ColorExtractor.extractColors(art, song.getTitle());
+            // 2. Extract Dynamic Palette Colors from Album Art (adaptive Day/Night)
+            boolean isDark = com.example.mp3player.util.ThemeManager.isCurrentlyDark(getContext());
+            ColorExtractor.PaletteColors palette = ColorExtractor.extractColors(art, song.getTitle(), isDark);
 
             // 3. Smoothly Animate the Background Gradient to match Cover Colors!
             ColorExtractor.applyAnimatedGradient(playerRoot, palette, currentBgColors);
@@ -252,6 +254,24 @@ public class PlayerFragment extends Fragment implements MusicPlaybackService.Pla
             // 6. Update Seekbar Progress Color to match Cover Palette
             seekBarProgress.setProgressTintList(ColorStateList.valueOf(palette.accentColor));
             seekBarProgress.setThumbTintList(ColorStateList.valueOf(palette.accentColor));
+
+            // 7. Update Text & Icon Colors for Day/Night Readability
+            int primaryText = isDark ? Color.WHITE : Color.parseColor("#0F172A");
+            int secondaryText = isDark ? Color.parseColor("#B3FFFFFF") : Color.parseColor("#475569");
+            int iconTint = isDark ? Color.WHITE : Color.parseColor("#1E293B");
+
+            tvSongTitle.setTextColor(primaryText);
+            tvSongArtist.setTextColor(secondaryText);
+            tvCurrentTime.setTextColor(secondaryText);
+            tvTotalTime.setTextColor(secondaryText);
+
+            btnCollapse.setImageTintList(ColorStateList.valueOf(iconTint));
+            btnEqualizer.setImageTintList(ColorStateList.valueOf(iconTint));
+            btnShuffle.setImageTintList(ColorStateList.valueOf(iconTint));
+            btnPrevious.setImageTintList(ColorStateList.valueOf(iconTint));
+            btnNext.setImageTintList(ColorStateList.valueOf(iconTint));
+            btnRepeat.setImageTintList(ColorStateList.valueOf(iconTint));
+            btnLanShare.setImageTintList(ColorStateList.valueOf(iconTint));
 
             currentSongId = song.getId();
         } else {

@@ -111,7 +111,7 @@ public class LyricsFragment extends Fragment implements MusicPlaybackService.Pla
             tv.setTextSize(16);
             tv.setGravity(Gravity.CENTER);
             tv.setPadding(16, padVertical, 16, padVertical);
-            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.text_secondary_light));
+            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.text_secondary));
             lineViews.add(tv);
             llLyricsContainer.addView(tv);
         }
@@ -128,7 +128,7 @@ public class LyricsFragment extends Fragment implements MusicPlaybackService.Pla
         if (activeIndex != currentActiveIndex) {
             if (currentActiveIndex >= 0 && currentActiveIndex < lineViews.size()) {
                 TextView prev = lineViews.get(currentActiveIndex);
-                prev.setTextColor(ContextCompat.getColor(getContext(), R.color.text_secondary_light));
+                prev.setTextColor(ContextCompat.getColor(getContext(), R.color.text_secondary));
                 prev.setTextSize(16);
                 prev.setTypeface(null, Typeface.NORMAL);
             }

@@ -23,7 +23,7 @@ public class ColorExtractor {
         }
     }
 
-    public static PaletteColors extractColors(Bitmap bitmap, String fallbackSeed) {
+    public static PaletteColors extractColors(Bitmap bitmap, String fallbackSeed, boolean isDarkTheme) {
         int dominant = 0;
         if (bitmap != null) {
             dominant = sampleDominantColor(bitmap);
@@ -40,23 +40,41 @@ public class ColorExtractor {
         float[] hsv = new float[3];
         Color.colorToHSV(dominant, hsv);
 
-        // Top Gradient: Dark, rich, saturated tone matching cover hue
-        float[] topHsv = new float[]{hsv[0], Math.min(1.0f, Math.max(0.6f, hsv[1])), 0.22f};
-        int topGradient = Color.HSVToColor(topHsv);
+        if (isDarkTheme) {
+            // Dark Mode: Rich deep tone at top -> Midnight slate at bottom
+            float[] topHsv = new float[]{hsv[0], Math.min(1.0f, Math.max(0.6f, hsv[1])), 0.22f};
+            int topGradient = Color.HSVToColor(topHsv);
 
-        // Bottom Gradient: Deep midnight slate with slight cover hue tint
-        float[] bottomHsv = new float[]{hsv[0], 0.25f, 0.07f};
-        int bottomGradient = Color.HSVToColor(bottomHsv);
+            float[] bottomHsv = new float[]{hsv[0], 0.25f, 0.07f};
+            int bottomGradient = Color.HSVToColor(bottomHsv);
 
-        // Accent Color: Bright vibrant tone for play button & indicators
-        float[] accentHsv = new float[]{hsv[0], Math.max(0.7f, hsv[1]), 0.95f};
-        int accentColor = Color.HSVToColor(accentHsv);
+            float[] accentHsv = new float[]{hsv[0], Math.max(0.7f, hsv[1]), 0.95f};
+            int accentColor = Color.HSVToColor(accentHsv);
 
-        // Secondary Accent for Play Button gradient (slightly shifted hue)
-        float[] accentEndHsv = new float[]{(hsv[0] + 25f) % 360f, 0.9f, 0.85f};
-        int accentGradientEnd = Color.HSVToColor(accentEndHsv);
+            float[] accentEndHsv = new float[]{(hsv[0] + 25f) % 360f, 0.9f, 0.85f};
+            int accentGradientEnd = Color.HSVToColor(accentEndHsv);
 
-        return new PaletteColors(topGradient, bottomGradient, accentColor, accentGradientEnd);
+            return new PaletteColors(topGradient, bottomGradient, accentColor, accentGradientEnd);
+        } else {
+            // Light Mode: Soft, pastel cover tint at top -> Crisp clean light slate at bottom
+            float[] topHsv = new float[]{hsv[0], 0.25f, 0.93f};
+            int topGradient = Color.HSVToColor(topHsv);
+
+            float[] bottomHsv = new float[]{hsv[0], 0.06f, 0.98f};
+            int bottomGradient = Color.HSVToColor(bottomHsv);
+
+            float[] accentHsv = new float[]{hsv[0], Math.max(0.75f, hsv[1]), 0.75f};
+            int accentColor = Color.HSVToColor(accentHsv);
+
+            float[] accentEndHsv = new float[]{(hsv[0] + 25f) % 360f, 0.85f, 0.60f};
+            int accentGradientEnd = Color.HSVToColor(accentEndHsv);
+
+            return new PaletteColors(topGradient, bottomGradient, accentColor, accentGradientEnd);
+        }
+    }
+
+    public static PaletteColors extractColors(Bitmap bitmap, String fallbackSeed) {
+        return extractColors(bitmap, fallbackSeed, true);
     }
 
     private static int sampleDominantColor(Bitmap bitmap) {
@@ -115,15 +133,15 @@ public class ColorExtractor {
     public static void applyAnimatedGradient(View targetView, PaletteColors newColors, int[] currentColors) {
         if (targetView == null || newColors == null) return;
 
-        int fromTop = (currentColors != null && currentColors.length >= 2) ? currentColors[0] : newColors.topGradient;
-        int fromBottom = (currentColors != null && currentColors.length >= 2) ? currentColors[1] : newColors.bottomGradient;
+        int fromTop = (currentColors != null && currentColors.length >= 2 && currentColors[0] != 0) ? currentColors[0] : newColors.topGradient;
+        int fromBottom = (currentColors != null && currentColors.length >= 2 && currentColors[1] != 0) ? currentColors[1] : newColors.bottomGradient;
 
         int toTop = newColors.topGradient;
         int toBottom = newColors.bottomGradient;
 
         ArgbEvaluator evaluator = new ArgbEvaluator();
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
-        animator.setDuration(600);
+        animator.setDuration(500);
         animator.addUpdateListener(animation -> {
             float fraction = animation.getAnimatedFraction();
             int top = (int) evaluator.evaluate(fraction, fromTop, toTop);
@@ -143,4 +161,3 @@ public class ColorExtractor {
         }
     }
 }
-

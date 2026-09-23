@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D0B14">
+    android:background="@color/app_bg">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -11,13 +11,13 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation" />
 
-    <!-- Bottom Navigation Bar matching Image 2 (Home, Player, Settings) -->
+    <!-- Bottom Navigation Bar with Day/Night adaptive theme -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
-        android:background="#15121E"
+        android:background="@color/bottom_nav_bg"
         app:itemIconTint="@color/bottom_nav_color_selector"
         app:itemTextColor="@color/bottom_nav_color_selector"
         app:labelVisibilityMode="labeled"
