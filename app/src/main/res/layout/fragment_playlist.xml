@@ -4,32 +4,93 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#12101E"
-    android:padding="20dp">
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="16dp">
 
-    <TextView
-        android:id="@+id/tvQueueTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Music Library"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="6dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tap any track to launch full-screen player"
-        android:textSize="13sp"
-        android:textColor="#80FFFFFF"
-        android:layout_marginBottom="16dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvQueue"
+    <!-- Top Header: Title & "+ Create Playlist" Button -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="24dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvQueueTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Music Library"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your playlists and songs"
+                android:textSize="12sp"
+                android:textColor="#80FFFFFF" />
+        </LinearLayout>
+
+        <!-- + New Playlist Button -->
+        <Button
+            android:id="@+id/btnCreatePlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="+ Playlist"
+            android:textSize="12sp"
+            android:backgroundTint="#BB86FC"
+            android:textColor="#000000"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+    </RelativeLayout>
+
+    <!-- Horizontal Carousel of Playlist Filter Chips -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginBottom="14dp">
+
+        <LinearLayout
+            android:id="@+id/llPlaylistChips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Dynamically populated chips -->
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvQueue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="24dp" />
+
+        <TextView
+            android:id="@+id/tvEmptyPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No tracks in this playlist.\nTap the 3 dots on any song to add it!"
+            android:textSize="14sp"
+            android:textColor="#80FFFFFF"
+            android:gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </LinearLayout>
