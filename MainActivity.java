@@ -9,8 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,8 +17,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.example.mp3player.model.Song;
 import com.example.mp3player.repository.MusicRepository;
@@ -58,19 +54,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setSupportActionBar(findViewById(R.id.toolbar));
-
         viewPager = findViewById(R.id.viewPager);
-        TabLayout tabDots = findViewById(R.id.tabDots);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
         // Start on Page 1 (The Middle Player Screen)
         viewPager.setCurrentItem(1, false);
-
-        // Connect the dots indicator to the swiping action
-        new TabLayoutMediator(tabDots, viewPager, (tab, position) -> {}).attach();
 
         // Start and bind the music service
         Intent serviceIntent = new Intent(this, MusicPlaybackService.class);
@@ -103,6 +93,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void switchToQueuePage() {
+        if (viewPager != null) {
+            viewPager.setCurrentItem(0, true);
+        }
+    }
+
+    public void switchToLyricsPage() {
+        if (viewPager != null) {
+            viewPager.setCurrentItem(2, true);
+        }
+    }
+
     private void checkPermissionAndLoadMusic() {
         String permission;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -129,27 +131,12 @@ public class MainActivity extends AppCompatActivity {
     private void loadMusicIntoService() {
         if (playbackService != null) {
             List<Song> songs = MusicRepository.loadSongs(this);
-            playbackService.getQueueManager().setQueue(songs, 0);
+            playbackService.getQueueManager().setQueue(songs, 1); // Start on Song 2 (Neon Horizon) matching Image 2!
             Toast.makeText(this, "Loaded " + songs.size() + " songs", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_theme) {
-            showThemeDialog();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void showThemeDialog() {
+    public void showThemeDialog() {
         int currentSetting = 2; // Default to System
         int mode = AppCompatDelegate.getDefaultNightMode();
         if (mode == AppCompatDelegate.MODE_NIGHT_NO) currentSetting = 0;

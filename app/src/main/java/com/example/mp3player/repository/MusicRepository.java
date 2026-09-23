@@ -88,10 +88,10 @@ public class MusicRepository {
         ));
         demo.add(new Song(
                 1002,
-                "Song 2 (Prototype)",
-                "Artist B",
                 "Neon Horizon",
-                214000,
+                "Astral Drift",
+                "Neon Horizon",
+                184000,
                 null,
                 "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
         ));
