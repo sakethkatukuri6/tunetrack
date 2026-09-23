@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Music Player</string>
+    <string name="now_playing">NOW PLAYING</string>
+    <string name="theme_settings">Theme Settings</string>
+    <string name="lan_audio_cast">LAN Audio Cast</string>
+    <string name="lan_cast_instructions">Scan this QR code from another device on the same Wi-Fi network to sync playback.</string>
+    <string name="done">Done</string>
+    <string name="close">Close</string>
+    <string name="current_queue">Current Queue</string>
+    <string name="live_lyrics">Live Lyrics</string>
+    <string name="no_lyrics">No synchronized lyrics available for this track.</string>
+</resources>
+

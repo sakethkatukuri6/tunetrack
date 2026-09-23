@@ -1,0 +1,13 @@
+{
+  "name": "music-player-lan-server",
+  "version": "1.0.0",
+  "description": "Zero-dependency LAN audio casting and playback synchronization companion server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["music", "audio", "lan", "streaming"],
+  "author": "",
+  "license": "MIT"
+}
+
