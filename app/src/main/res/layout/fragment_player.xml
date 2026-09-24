@@ -4,16 +4,17 @@
     android:id="@+id/playerRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="24dp">
+    android:paddingTop="12dp"
+    android:paddingBottom="8dp">
 
-    <!-- 1. Header Bar: Chevron Down, Centered Title with Dots, Equalizer -->
+    <!-- 1. Header Bar: Chevron Down (<), Centered Title with 3 Interactive Dots, Equalizer -->
     <RelativeLayout
         android:id="@+id/headerBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="4dp"
         android:layout_alignParentTop="true">
 
         <ImageButton
@@ -24,7 +25,7 @@
             android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_chevron_down"
-            android:contentDescription="Minimize" />
+            android:contentDescription="Minimize to Library" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,6 +35,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tvPlayerHeaderTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NOW PLAYING"
@@ -42,31 +44,62 @@
                 android:textStyle="bold"
                 android:textColor="#E6FFFFFF" />
 
-            <!-- 3 Dots Indicator under NOW PLAYING -->
+            <!-- 3 Interactive Dots Indicator under Header Title: Queue | Player | Lyrics -->
             <LinearLayout
+                android:id="@+id/llHeaderDots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_marginTop="5dp">
 
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:background="@drawable/tab_indicator_unselected" />
+                <!-- Left Dot: Queue -->
+                <FrameLayout
+                    android:id="@+id/flDotQueue"
+                    android:layout_width="24dp"
+                    android:layout_height="20dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                <View
-                    android:id="@+id/dotActive"
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="6dp"
-                    android:background="@drawable/tab_indicator_selected" />
+                    <View
+                        android:id="@+id/dotQueue"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/tab_indicator_unselected" />
+                </FrameLayout>
 
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:background="@drawable/tab_indicator_unselected" />
+                <!-- Center Dot: Now Playing Player -->
+                <FrameLayout
+                    android:id="@+id/flDotPlayer"
+                    android:layout_width="24dp"
+                    android:layout_height="20dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <View
+                        android:id="@+id/dotPlayer"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/tab_indicator_selected" />
+                </FrameLayout>
+
+                <!-- Right Dot: Lyrics -->
+                <FrameLayout
+                    android:id="@+id/flDotLyrics"
+                    android:layout_width="24dp"
+                    android:layout_height="20dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <View
+                        android:id="@+id/dotLyrics"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/tab_indicator_unselected" />
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -81,215 +114,11 @@
             android:contentDescription="Equalizer" />
     </RelativeLayout>
 
-    <!-- 2. Album Art Card with Rounded Frame and Center Glow -->
-    <FrameLayout
-        android:id="@+id/frameAlbumArt"
-        android:layout_width="270dp"
-        android:layout_height="270dp"
-        android:layout_below="@id/headerBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_album_card"
-        android:clipToOutline="true"
-        android:elevation="14dp"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/ivAlbumArt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:contentDescription="Album Art" />
-    </FrameLayout>
-
-    <!-- 3. Mini Dot Line / Waveform Accent -->
-    <TextView
-        android:id="@+id/tvDotSeparator"
+    <!-- 2. Sub-Pages ViewPager2: Page 0 (Queue) | Page 1 (Now Playing) | Page 2 (Lyrics) -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpPlayerContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/frameAlbumArt"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="• • • • • • • • • • • • • • • • • •"
-        android:letterSpacing="0.25"
-        android:textSize="12sp"
-        android:textColor="#59FFFFFF" />
-
-    <!-- 4. Track Info Row: Title & Artist on Left, QR & Heart on Right -->
-    <RelativeLayout
-        android:id="@+id/trackInfoRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvDotSeparator"
-        android:layout_marginTop="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/actionButtons"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvSongTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Neon Horizon"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFFFF"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-            <TextView
-                android:id="@+id/tvSongArtist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Astral Drift"
-                android:textSize="14sp"
-                android:textColor="#B3FFFFFF"
-                android:maxLines="1"
-                android:ellipsize="end" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/actionButtons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageButton
-                android:id="@+id/btnLanShare"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_qr_code_mini"
-                android:contentDescription="LAN Share" />
-
-            <ImageButton
-                android:id="@+id/btnFavorite"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="14dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_heart_filled"
-                android:contentDescription="Favorite" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <!-- 5. Seekbar and Timestamps -->
-    <LinearLayout
-        android:id="@+id/progressContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/trackInfoRow"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
-
-        <SeekBar
-            android:id="@+id/seekBarProgress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:progressDrawable="@drawable/bg_seekbar_progress"
-            android:thumb="@drawable/bg_seekbar_thumb" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp">
-
-            <TextView
-                android:id="@+id/tvCurrentTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="0:00"
-                android:textSize="12sp"
-                android:textColor="#80FFFFFF" />
-
-            <TextView
-                android:id="@+id/tvTotalTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="3:04"
-                android:textSize="12sp"
-                android:textColor="#80FFFFFF" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <!-- 6. Bottom Controls: Shuffle, Prev, Gradient Play/Pause, Next, Repeat -->
-    <LinearLayout
-        android:id="@+id/controlsRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/progressContainer"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/btnShuffle"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_shuffle_modern"
-            android:contentDescription="Shuffle" />
-
-        <ImageButton
-            android:id="@+id/btnPrevious"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_prev_modern"
-            android:contentDescription="Previous" />
-
-        <!-- Circular Radiant Gradient Play/Pause Button -->
-        <FrameLayout
-            android:id="@+id/flPlayPause"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_play_button"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:elevation="10dp">
-
-            <ImageView
-                android:id="@+id/ivPlayPauseIcon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_play_modern"
-                android:contentDescription="Play/Pause" />
-        </FrameLayout>
-
-        <ImageButton
-            android:id="@+id/btnNext"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_next_modern"
-            android:contentDescription="Next" />
-
-        <ImageButton
-            android:id="@+id/btnRepeat"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_repeat_modern"
-            android:contentDescription="Repeat" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerBar" />
 
 </RelativeLayout>

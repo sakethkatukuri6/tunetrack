@@ -1,25 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="24dp">
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
-    <TextView
-        android:id="@+id/tvLyricsHeader"
-        android:layout_width="wrap_content"
+    <!-- 1. Header (Title & Artist) -->
+    <LinearLayout
+        android:id="@+id/llLyricsHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/live_lyrics"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LIVE LYRICS"
+            android:textSize="11sp"
+            android:letterSpacing="0.12"
+            android:textStyle="bold"
+            android:textColor="@color/primary" />
+
+        <TextView
+            android:id="@+id/tvLyricsSongTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Select a song"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvLyricsSongArtist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text=""
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:maxLines="1"
+            android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- 2. LRC Location & Selection Card -->
+    <LinearLayout
+        android:id="@+id/llLrcLocationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llLyricsHeader"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_album_card"
+        android:paddingStart="12dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/ivLrcStatusIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_lyrics"
+            app:tint="@color/primary"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="LRC Source" />
+
+        <LinearLayout
+            android:id="@+id/llLrcTextContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LRC FILE LOCATION"
+                android:textSize="9sp"
+                android:letterSpacing="0.1"
+                android:textStyle="bold"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvLrcLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Searching for LRC file..."
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:maxLines="1"
+                android:ellipsize="middle" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSelectLrc"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Choose"
+            android:textSize="11sp"
+            android:textColor="@color/primary" />
+
+        <ImageButton
+            android:id="@+id/btnClearLrc"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:contentDescription="Reset Custom LRC" />
+    </LinearLayout>
+
+    <!-- 3. Scrollable Lyrics View -->
     <ScrollView
         android:id="@+id/svLyrics"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/llLrcLocationBar"
         android:scrollbars="none">
 
         <LinearLayout
@@ -28,19 +141,67 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:paddingTop="32dp"
-            android:paddingBottom="64dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="90dp">
 
             <TextView
                 android:id="@+id/tvEmptyLyrics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_lyrics"
-                android:textSize="15sp"
-                android:textColor="?android:attr/textColorSecondary"
+                android:text="No synchronized lyrics found for this track.\nTap 'Choose' above to select an .lrc file."
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:paddingTop="48dp"
                 android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <!-- 4. Floating Scroll / Seek Indicator Pill -->
+    <LinearLayout
+        android:id="@+id/llScrollControls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_album_card"
+        android:paddingStart="14dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:elevation="6dp"
+        android:visibility="gone">
 
+        <TextView
+            android:id="@+id/tvScrollPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="▶ Play from here"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/card_stroke" />
+
+        <Button
+            android:id="@+id/btnReSyncLyrics"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="Sync"
+            android:textSize="11sp"
+            android:textColor="@color/text_secondary"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
+    </LinearLayout>
+
+</RelativeLayout>

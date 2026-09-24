@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_album_card">
+
+    <!-- Active Indicator / Track Number -->
+    <FrameLayout
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvQueueTrackNumber"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary" />
+
+        <ImageView
+            android:id="@+id/ivQueuePlayingIndicator"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_nav_player"
+            app:tint="@color/primary"
+            android:visibility="gone"
+            android:contentDescription="Playing" />
+    </FrameLayout>
+
+    <!-- Title and Artist -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvQueueSongTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Song Title"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvQueueSongArtist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Artist Name"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:maxLines="1"
+            android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- Duration -->
+    <TextView
+        android:id="@+id/tvQueueDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3:45"
+        android:textSize="12sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginEnd="10dp" />
+
+    <!-- Remove from Queue Button -->
+    <ImageButton
+        android:id="@+id/btnQueueRemove"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_close"
+        app:tint="@color/text_secondary"
+        android:padding="6dp"
+        android:contentDescription="Remove from Queue" />
+
+</LinearLayout>
+

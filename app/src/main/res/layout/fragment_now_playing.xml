@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="12dp">
+
+    <!-- 1. Album Art Card with Rounded Frame and Center Glow -->
+    <FrameLayout
+        android:id="@+id/frameAlbumArt"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_album_card"
+        android:clipToOutline="true"
+        android:elevation="14dp"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/ivAlbumArt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="Album Art" />
+    </FrameLayout>
+
+    <!-- 2. Mini Dot Line / Waveform Accent -->
+    <TextView
+        android:id="@+id/tvDotSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frameAlbumArt"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="• • • • • • • • • • • • • • • • • •"
+        android:letterSpacing="0.25"
+        android:textSize="12sp"
+        android:textColor="#59FFFFFF" />
+
+    <!-- 3. Track Info Row: Title & Artist on Left, QR & Heart on Right -->
+    <RelativeLayout
+        android:id="@+id/trackInfoRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDotSeparator"
+        android:layout_marginTop="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/actionButtons"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSongTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Track Title"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFFFF"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/tvSongArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Artist"
+                android:textSize="14sp"
+                android:textColor="#B3FFFFFF"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/actionButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnLanShare"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_qr_code_mini"
+                android:contentDescription="LAN Share" />
+
+            <ImageButton
+                android:id="@+id/btnFavorite"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="14dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_heart_filled"
+                android:contentDescription="Favorite" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- 4. Seekbar and Timestamps -->
+    <LinearLayout
+        android:id="@+id/progressContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trackInfoRow"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:id="@+id/seekBarProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:progressDrawable="@drawable/bg_seekbar_progress"
+            android:thumb="@drawable/bg_seekbar_thumb" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp">
+
+            <TextView
+                android:id="@+id/tvCurrentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="0:00"
+                android:textSize="12sp"
+                android:textColor="#80FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvTotalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="3:04"
+                android:textSize="12sp"
+                android:textColor="#80FFFFFF" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- 5. Controls: Shuffle, Prev, Gradient Play/Pause, Next, Repeat -->
+    <LinearLayout
+        android:id="@+id/controlsRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressContainer"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnShuffle"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_shuffle_modern"
+            android:contentDescription="Shuffle" />
+
+        <ImageButton
+            android:id="@+id/btnPrevious"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_prev_modern"
+            android:contentDescription="Previous" />
+
+        <!-- Circular Radiant Gradient Play/Pause Button -->
+        <FrameLayout
+            android:id="@+id/flPlayPause"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_play_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:elevation="10dp">
+
+            <ImageView
+                android:id="@+id/ivPlayPauseIcon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_play_modern"
+                android:contentDescription="Play/Pause" />
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_next_modern"
+            android:contentDescription="Next" />
+
+        <ImageButton
+            android:id="@+id/btnRepeat"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_repeat_modern"
+            android:contentDescription="Repeat" />
+    </LinearLayout>
+
+    <!-- 6. Bottom Shortcuts: Queue (Left) and Lyrics (Right) -->
+    <RelativeLayout
+        android:id="@+id/bottomShortcutsRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/controlsRow"
+        android:layout_marginTop="16dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <LinearLayout
+            android:id="@+id/btnGoToQueue"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/ivQueueShortcutIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_queue_music"
+                app:tint="@color/text_secondary"
+                android:contentDescription="Queue" />
+
+            <TextView
+                android:id="@+id/tvQueueShortcutLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Queue"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnGoToLyrics"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/ivLyricsShortcutIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_lyrics"
+                app:tint="@color/text_secondary"
+                android:contentDescription="Lyrics" />
+
+            <TextView
+                android:id="@+id/tvLyricsShortcutLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Lyrics"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
+

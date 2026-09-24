@@ -162,5 +162,27 @@ public class QueueManager {
             shuffleOrder.add(0, currentIndex);
         }
     }
+
+    public synchronized void removeSongAt(int index) {
+        if (index >= 0 && index < queue.size()) {
+            queue.remove(index);
+            if (queue.isEmpty()) {
+                currentIndex = -1;
+            } else if (index < currentIndex) {
+                currentIndex--;
+            } else if (index == currentIndex) {
+                if (currentIndex >= queue.size()) {
+                    currentIndex = 0;
+                }
+            }
+            rebuildShuffleOrder();
+        }
+    }
+
+    public synchronized void clear() {
+        queue.clear();
+        shuffleOrder.clear();
+        currentIndex = -1;
+    }
 }
 

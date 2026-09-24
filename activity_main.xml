@@ -11,6 +11,131 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation" />
 
+    <!-- Mini Player Floating Tab in Bottom Right Corner -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMiniPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="58dp"
+        android:layout_above="@id/bottomNavigation"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="48dp"
+        app:cardCornerRadius="29dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="@color/card_bg"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/card_stroke"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="7dp"
+            android:paddingEnd="12dp">
+
+            <!-- Circular Vinyl / Album Art Container -->
+            <FrameLayout
+                android:id="@+id/flMiniArtContainer"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/tab_indicator_unselected"
+                android:clipToOutline="true">
+
+                <ImageView
+                    android:id="@+id/ivMiniAlbumArt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_nav_player"
+                    android:contentDescription="Mini Album Art" />
+            </FrameLayout>
+
+            <!-- Song Title & Artist -->
+            <LinearLayout
+                android:id="@+id/llMiniSongInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/flMiniArtContainer"
+                android:layout_toStartOf="@id/llMiniActions"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvMiniTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="120dp"
+                    android:text="Song Title"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/tvMiniArtist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="120dp"
+                    android:text="Artist"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <!-- Mini Actions: Play/Pause, Next -->
+            <LinearLayout
+                android:id="@+id/llMiniActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/btnMiniPlayPause"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_play_modern"
+                    app:tint="@color/primary"
+                    android:padding="6dp"
+                    android:contentDescription="Play/Pause" />
+
+                <ImageButton
+                    android:id="@+id/btnMiniNext"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="2dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_next_modern"
+                    app:tint="@color/text_secondary"
+                    android:padding="6dp"
+                    android:contentDescription="Next Song" />
+            </LinearLayout>
+
+            <!-- Thin Progress Bar at bottom of card -->
+            <ProgressBar
+                android:id="@+id/pbMiniProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:progressTint="@color/primary"
+                android:progressBackgroundTint="@color/card_stroke"
+                android:max="1000" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <!-- Bottom Navigation Bar with Day/Night adaptive theme -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
